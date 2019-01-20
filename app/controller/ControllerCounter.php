@@ -29,7 +29,7 @@ class ControllerCounter {
 	public function Counter() {
 	
 		// get input data 
-		$this->RequestTest();
+		$this->Request();
 
 		// validate input URL 
 		$this->ValidateUrl($this->input_url);
