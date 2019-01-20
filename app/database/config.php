@@ -7,6 +7,6 @@ if($_SERVER['SERVER_ADDR']=="1.1.1.1"){
 } else {
 	define('HOST','localhost');
 	define('DB_USER', 'project_user');
-	define('DB_PASSWORD','project1');
+	define('DB_PASSWORD','House123!');
 	define('DB_NAME','project');
 }
