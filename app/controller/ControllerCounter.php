@@ -284,7 +284,8 @@ class ControllerCounter {
 	public function OutputData() {
 
 		$this->result['output_url'] = $this->input_url; 
-		$this->result['output_element'] = $this->input_element;
+		$this->result['output_element'] = 
+		'<' . $this->input_element . '>' ;
 		$this->result['output_domain'] = $this->domain_name;
 		$this->result['output_count'] = $this->output_count;
 		$this->result['output_time'] = $this->request_time;

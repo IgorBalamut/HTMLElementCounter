@@ -41,6 +41,7 @@ nav ul li a:hover {
 	background: #e6af2e;
 	font-size: 25px;
 	font-style: italic;
+	font-weight: bold;
 }
 
 .logo:hover {
@@ -149,29 +150,34 @@ nav ul li a:hover {
 
 /** counter section **/
 #counter {
-	padding: 30px 0;
+	padding: 15px 0;
 	background-color: #beb7a4;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .counter-container {
-	max-width: 90vw;
+	min-width: 60%;
 	padding: 0 30px;
 	margin: 0,auto;
 }
 
-.counter-text {
+.counter-title {
 	font-size: 25px;
+	font-weight: 500;
+	font-style: italic;
 	text-transform: uppercase;
 	color:#191716;
-	font-style: italic;
-	margin-bottom: 30px;
+	margin-bottom: 10px;
+	text-align: center;
 }
 
 #counter input[type=text], select {
   font-size: 15px; 
-  min-width: 300px;
+  min-width: 100%;
   padding: 12px 20px;
-  margin: 8px 0;
+  margin: 8px 0 15px 0;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -182,15 +188,16 @@ input[type=submit] {
 	text-decoration: none;
 	display: block;
 	text-align: center;
+	margin: 10px auto 0 auto;
 
 	font-size: 15px;
 	font-weight: bold;
 	padding: 15px;
 	text-transform: uppercase;
-	margin: 0 0;
 	background: transparent;
 	color: #191716;
 	border: 2px solid #191716;
+	outline: none;
 }
 
 input[type=submit]:hover {
@@ -199,68 +206,106 @@ input[type=submit]:hover {
   border: 2px solid #e6af2e;
 }
 
+
 /** end of counter section **/
 
 /** results section **/
 #result {
-	padding: 30px 0;
 	background-color: #e8e2db;
+	padding: 15px 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .result-container {
-	max-width: 90vw;
+	min-width: 60%;
 	padding: 0 30px;
 	margin: 0,auto;
 }
 
 .result-title {
 	font-size: 25px;
+	font-weight: 500;
+	font-style: italic;
 	text-transform: uppercase;
 	color:#191716;
-	font-style: italic;
-	margin-bottom: 30px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+.result-text {
+	margin-bottom: 15px;
 }
 
 .result-text p {
 	font-weight: 500px;
 	color:#191716;
+	margin-bottom: 5px;
 }
 
 #result span {
+	display: inline-block;
+  	min-width: 50px;
+  	padding: 5px 5px 5px 5px;
+  	margin: 0 5px 0 5px;
 	font-weight: bold;
+	background-color: whitesmoke;
+	text-align: center;
+}
+
+/* to set height for empty span*/
+#result span:empty:before {
+  content: "\00a0";
 }
 
 /** end of results section **/
 
 /** about section **/
 #about {
-	min-height: 90vh;
-	padding: 30px 0;
 	background-color: whitesmoke;
+	padding: 30px 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .about-container {
-	max-width: 90vw;
+	min-width: 60%;
 	padding: 0 30px;
 	margin: 0,auto;
 }
 
 .about-title {
 	font-size: 25px;
+	font-weight: 500;
+	font-style: italic;
 	text-transform: uppercase;
 	color:#191716;
-	font-style: italic;
-	margin-bottom: 30px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.about-text p {
+	font-weight: 500px;
+	color:#191716;
 }
 /** end of about section **/
 
 /** footer section **/
 #footer {
-	min-height: 5vh;
-	padding: 10px;
-	background-color: #beb7a4;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+    min-height: 5vh;
+    padding: 10px;
+    background-color: #beb7a4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 /** end of footer section **/
+
+/** modal section **/
+#modal {
+    display: none;
+    position: fixed;
+}
+/** end of modal section **/

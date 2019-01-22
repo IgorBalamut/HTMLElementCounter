@@ -9,6 +9,7 @@
 	<meta name="description" content="Project">
 	<meta name="author" content="Igor B">
 
+	<link rel="shortcut icon" type="image/x-icon" href="images/html5.png">
 	<!-- Google Fonts  -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<!-- <link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet"> -->
@@ -60,17 +61,21 @@
 <!-- counter section -->
 <section id="counter">
 	<div class="counter-container">
-		<div class="counter-text">Input your data</div>
+		<h1 class="counter-title">Input your data</h1>
 		<form id="input_form" method="post" action="counter.php">
-		 	URL (it should start from http:// or https://, max 255 characters):
+		 	URL should start from http:// or https://, maximum 255 characters
 		 	<br>
-		  	<input type="text" name="input_url" value="https://www.google.com" required pattern="^(http|https):\/\/(.*)" maxlength="255">
+		  	<input type="text" name="input_url" 
+			placeholder="Enter web page URL"
+		  	required pattern="^(http|https):\/\/(.*)" maxlength="255">
 		  	<br>
-		 	Element (it should be valid HTML5 tag, max 10 characters):
+		 	Element should be valid HTML5 element, maximum 10 characters
 		 	<br>
-			<input type="text" name="input_element" value="a" required pattern="^[a-zA-Z]+$" maxlength="10">
-		  	<br><br>
-		  	<input type="submit" value="Submit">
+			<input type="text" name="input_element" 
+			placeholder="Enter HTML element"
+			required pattern="^[a-zA-Z]+$" maxlength="10">
+		  	<input type="submit" value="Submit Request">
+		  	
 	</form> 
 	</div>
 </section>
@@ -80,16 +85,18 @@
 		<div class="result-title">Request results</div>
 
 	<div class="result-text">
-	<p>URL  <span class="output_url">__</span> fetched on <span class="output_time">__</span>, took <span class="output_period">__</span> msec.</p>
-    <p>Element <<span class="output_element">__</span>> appeared <span class="output_count">__</span> times in page.</p>
-	</div>
-    <br/>
+	<p>URL  <span class="output_url correct"></span> fetched on <span class="output_time correct"></span>, took <span class="output_period"></span> msec.</p>
+    <p>Element <span class="output_element"></span> appeared <span class="output_count"></span> times in the page.</p>
+	 </div>	
+
     <div class="result-title">General Statistics</div>
 
-    <p><span class="stat_count_url">__</span> different URLs from <span class="output_domain">__</span> have been fetched.</p>
-    <p>Average fetch time from <span class="output_domain">__</span> during the last 24 hours hours is <span class="stat_average_time">__</span> msec.</p>
-    <p>There was a total of <span class="stat_element_domain">__</span> <<span class="output_element">__</span>> elements from <span class="output_domain">__</span>.</p>
-    <p>Total of <span class="stat_total_element">__</span> <<span class="output_element">__</span>> elements counted in all requests ever made.</p>
+    <div class="result-text">
+    <p><span class="stat_count_url"></span> different URLs from <span class="output_domain"></span> have been fetched.</p>
+    <p>Average fetch time from <span class="output_domain"></span> during the last 24 hours hours is <span class="stat_average_time"></span> msec.</p>
+    <p>There was a total of <span class="stat_element_domain"></span> <span class="output_element"></span> elements from <span class="output_domain"></span>.</p>
+    <p>Total of <span class="stat_total_element"></span> <span class="output_element"></span> elements counted in all requests ever made.</p>
+    </div>
 
 </div>
 </div>
@@ -99,15 +106,27 @@
 <!-- about section -->
 <section id="about">
 	<div class="about-container">
-		<div class="about-title">About the Service</div>
+		<div class="about-title">About the HTML ELement Couter
+		</div>
+		<div class="about-text"><p>Element HTML Counter allows to count HTML tags on web page.</p>
+		</div>
 </section>	
 <!-- end of about section -->
 
 <!-- footer -->
 <footer id="footer">
-<p>HTML Element Counter</p>
-<footer>
+<p>2019 &copy; HTML Element Counter</p>
+</footer>
 <!-- end of footer -->
+
+<!-- modal -->
+<!-- <div id="modal" class="modal">
+	<div class="modal-content">
+		<p>It is a modal</p>
+	</div>
+</div> -->
+<!-- end of modal -->
+
 
 <!-- jQuery Core 3.3.1 -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"

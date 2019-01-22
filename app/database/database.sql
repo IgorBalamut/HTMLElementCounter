@@ -1,5 +1,8 @@
+-- drop database if exists
+drop database if exists project; 
+
 -- create database
-create database project;
+create database if not exists project;
 
 -- use database
 use project;
