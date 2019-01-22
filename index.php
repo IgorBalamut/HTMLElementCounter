@@ -106,7 +106,7 @@
 <!-- about section -->
 <section id="about">
 	<div class="about-container">
-		<div class="about-title">About the HTML ELement Couter
+		<div class="about-title">About the HTML Element Counter
 		</div>
 		<div class="about-text"><p>Element HTML Counter allows to count HTML tags on web page.</p>
 		</div>
