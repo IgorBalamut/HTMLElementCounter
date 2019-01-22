@@ -129,6 +129,7 @@
 		<li>Only valid URLs from Curl response are saved.</li>
 		<li>Original URLs are saved for statistic.</li>
 		<li>If original URLs are similar, and differs only http/https parts, they considered as different items anyway, though can return the same HTML page.</li>
+		<li>If the same request was made less than 5 minutes ago, the previous response results are shown. 
 		</ul>
 		</div>
 </section>	

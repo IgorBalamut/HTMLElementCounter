@@ -8,135 +8,130 @@ require_once 'app/model/Url.php';
 require_once 'app/model/Statistic.php';
 require_once 'app/model/Request.php';
 
-class ControllerCounter { 
+class ControllerCounter
+{
+    public $input_url;
+    public $input_element;
+    public $domain_name;
+    public $duration_mls;
+    public $request_time;
+    public $output_count;
 
-	public $input_url;
-	public $input_element;
-	public $domain_name;
-	public $duration_mls;
-	public $request_time;
-	public $output_count;
+    public $flag_new = true;
 
-	public $flag_new = true;
+    public $htmlDoc;
+    public $info;
+    public $dom;
 
-	public $htmlDoc;
-	public $info;
-	public $dom;
+    public $result = array('status' => 'success');
+    public $resultError = array('status' => 'error');
 
-	public $result = array('status' => 'success');
-	public $resultError = array('status' =>'error');
+    public function Counter()
+    {	
+        // get input data 
+        $this->Request();
 
-	public function Counter() {
-	
-		// get input data 
-		$this->Request();
+        // validate input URL 
+        $this->ValidateUrl($this->input_url);    
+     
+        // validate input element 
+        $this->ValidateElement();
 
-		// validate input URL 
-		$this->ValidateUrl($this->input_url);
+        // curl session,validate URL,get HTML document 
+        $this->CurlSession();
 
-		// validate input element 
-		$this->ValidateElement();
+        // if a new request then add to DB
+        if($this->flag_new) {
 
-		// curl session,validate URL,get HTML document 
-		$this->CurlSession();
+            // get domain name from input URL
+            $this->GetDomain();
 
-		// if a new request then add to DB
-		if($this->flag_new) {
+            // create DOM for HTML document
+	        $this->CreateDom();
 
-			// get domain name from input URL
-			$this->GetDomain();
+            // count input elements 
+            $this->CountElement();
 
-			// create DOM for HTML document
-			$this->CreateDom();
-		
-			// count input elements 
-			$this->CountElement();
+            // save data into database (model)
+            $this->SaveRequestData();
+        } else {
 
-			// save data into database (model)
-			$this->SaveRequestData();
+           // get previous request data 
+           $this->GetRequestData();
+        }
 
-		} else {
+        // prepare data for response
+        $this->OutputData();
 
-			// get previous request data 
-			$this->GetRequestData();
-		}
+        // get statistic from database (model)
+        $this->GetStatisticData();
 
-		// prepare data for response
-		$this->OutputData();
-
-		// get statistic from database (model)
-		$this->GetStatisticData();
-
-		// send response to view (index.php)
-		$this->Response();
-
+        // send response to view (index.php)
+        $this->Response();
 	}
 
+    public function Request()
+    {
+        if(isset($_POST['input_url'])) {
+            $this->input_url = $_POST['input_url'];
+        } else {
+            $this->input_url = '';
+        }
 
-	public function Request() {
-
-		if(isset($_POST['input_url'])) {
-			$this->input_url = $_POST['input_url'];
-		} else {
-			$this->input_url = '';
-		}
-		
-
-		if(isset($_POST['input_element'])) {
-			$this->input_element = $_POST['input_element'];
-		} else {
-			$this->input_element = '';
-		}
-	}
+        if(isset($_POST['input_element'])) {
+            $this->input_element = $_POST['input_element'];
+        } else {
+            $this->input_element = '';
+        }
+    }
 
 	//request for testing counter page output 
-	public function RequestTest() {
-		$this->input_url = 'http://www.google.com';	
-		$this->input_element = 'li';
-	}
+    public function RequestTest()
+    {
+        $this->input_url = 'http://www.google.com';	
+        $this->input_element = 'li';
+    }
 
-	public function Response() {
-		echo json_encode($this->result);
-		exit();
-	}
+    public function Response()
+    {
+        echo json_encode($this->result);
+        exit();
+    }
 
-	public function ResponseError() {
-		echo json_encode($this->resultError);
-		exit();
-	}
+    public function ResponseError()
+    {
+        echo json_encode($this->resultError);
+        exit();
+    }
 
-	
+    public function ValidateUrl($url)
+    {
+        if (filter_var($url,FILTER_VALIDATE_URL,FILTER_FLAG_HOST_REQUIRED) === False){
+            $this->resultError['Error'] = 'Not a valid URL';
+            $this->ResponseError();
+        } else {
+            $pars = parse_url($url);
+            if($pars['scheme'] !== 'http' and
+                $pars['scheme'] !== 'https') {
+                $this->resultError['Error'] = 
+                'Http scheme is not valid <br>' 
+                .$pars['scheme'] . '<br>'
+                .'Please input http or https <br>';
+                $this->ResponseError();
+            }
+        } 
+    }
 
-	public function ValidateUrl($url) {
-		if (filter_var($url,
-		 FILTER_VALIDATE_URL,
-		 FILTER_FLAG_HOST_REQUIRED
-		) === False) {
-				$this->resultError['Error'] = 'Not a valid URL';
-    			$this->ResponseError();
-		} else {
-			$pars = parse_url($url);
-			if($pars['scheme'] !== 'http' and
-				$pars['scheme'] !== 'https') {
-				$this->resultError['Error'] = 
-				'Scheme is not valid <br>' 
-				.$pars['scheme'] . '<br>'
-				.'Please input http or https <br>';
-				$this->ResponseError();
-			}
-		} 
-	}
-
-	public function ValidateElement() {
-
+	public function ValidateElement()
+	{
 		if(!ValidateElement::do($this->input_element)) {
 			$this->resultError['Error'] = 'not a valid element';
     			$this->ResponseError(); 
 		}
 	}
 
-	public function CurlInit($url) {
-
+	public function CurlInit($url)
+	{
 		// create connection
 		$conn = DBConnection::DBConnect();
 
@@ -172,8 +167,8 @@ class ControllerCounter {
 
 	}
 
-	public function CurlSession() {
-
+	public function CurlSession()
+	{
 	  	$this->CurlInit($this->input_url);
 	  	//var_dump($this->info);
 
@@ -195,7 +190,8 @@ class ControllerCounter {
 		}
 	}
 
-	public function CreateDom() { 
+	public function CreateDom()
+	{ 
 		// create new DOMDocument
 		$this->dom = new \DOMDocument('1.0', 'UTF-8');
 		// set error level
@@ -206,12 +202,14 @@ class ControllerCounter {
 		libxml_use_internal_errors($internalErrors);
 	}
 
-	public function GetDomain() {
+	public function GetDomain()
+	{
 		$this->domain_name = str_ireplace('www.', '',
 		 parse_url($this->input_url, PHP_URL_HOST));
 	}
 
-	public function CountElement() { 
+	public function CountElement()
+	{ 
 		$this->output_count = 0;
 		foreach($this->dom->getElementsByTagName($this->input_element) as $element) {
 			$this->output_count++;
@@ -219,7 +217,8 @@ class ControllerCounter {
 
 	}
 	
-	public function SaveRequestData() { 
+	public function SaveRequestData()
+	{ 
 
 		// create connection
 		$conn = DBConnection::DBConnect();
@@ -262,7 +261,8 @@ class ControllerCounter {
 		$conn->close();
 	}
 
-	public function GetRequestData() {
+	public function GetRequestData()
+	{
 
 		// create connection
 		$conn = DBConnection::DBConnect();
@@ -281,7 +281,8 @@ class ControllerCounter {
 		$conn->close();
 	}
 
-	public function OutputData() {
+	public function OutputData()
+	{
 
 		$this->result['output_url'] = $this->input_url; 
 		$this->result['output_element'] = 
@@ -291,10 +292,18 @@ class ControllerCounter {
 		$this->result['output_time'] = $this->request_time;
 		$this->result['output_duration'] = $this->duration_mls;
 
+		if($this->flag_new) {
+			$this->result['output_previous'] = '';
+		} else {
+			$this->result['output_previous'] = 
+			'The same request was made less than 5 minutes ago. The previous response results are shown';
+			$this->flag_new = true;
+
+		}
 	}
 
-	public function GetStatisticData() { 
-
+	public function GetStatisticData()
+	{ 
 		// create connection
 		$conn = DBConnection::DBConnect();
 
@@ -333,9 +342,5 @@ class ControllerCounter {
 
 		// close connection
 		$conn->close();
-	
 	}
-
-	
-
 }

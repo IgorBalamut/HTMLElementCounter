@@ -33,6 +33,11 @@ $(document).ready(function(){
                 $('.stat_average_time').text(data.stat_average_time);
                 $('.stat_element_domain').text(data.stat_element_domain);
                 $('.stat_total_element').text(data.stat_total_element);
+                
+                if(!(data.output_previous == '')){
+                    openModal(data.output_previous);
+                }
+                
                 } else { 
                     openModal(data.Error);       
                 }

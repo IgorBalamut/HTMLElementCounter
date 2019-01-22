@@ -1,89 +1,96 @@
 <?php 
-class Element { 
-	private $_conn;
+class Element
+{
+    private $_conn;
 
-	public $id;
-	public $name;
+    public $id;
+    public $name;
 
-	public function __construct($conn) {
-		$this->_conn = $conn;
-	}
+    public function __construct($conn)
+    {
+        $this->_conn = $conn;
+    }
 
-	public static function All($conn) {
-		$sql = "SELECT id, name FROM tbElement";
-		$result = $conn->query($sql);
-		return $result;
-	}
+    public static function All($conn)
+    {
+        $sql = "SELECT id, name FROM tbElement";
+        $result = $conn->query($sql);
+        return $result;
+    }
 
-	// find element by name 
-	// return object
-	public static function find($conn,$name) {
-		
-		// prepare and bind
-		$stmt = $conn->prepare(sprintf("SELECT id,name FROM tbElement WHERE name = ?"));
-		$stmt->bind_param("s", $name);
-		$stmt->execute();
+    // find element by name
+    // return object
+    public static function find($conn, $name)
+    {
 
-		if (!$stmt->execute()) {
-			exit($stmt->error);
-	    } else {
-   			$stmt->bind_result($id,$name);
-    		$stmt->fetch();
+        // prepare and bind
+        $stmt = $conn->prepare(sprintf("SELECT id,name FROM tbElement WHERE name = ?"));
+        $stmt->bind_param("s", $name);
+        $stmt->execute();
 
-    		if(isset($id)) {
-	    		$element = new Element($conn);
-	    		$element->id = $id;
-	    		$element->name = $name;
-	    	} else {
-	    		$element = null;
-	    	}
-	    }
-	    return $element;
-	}
+        if (!$stmt->execute()) {
+            exit($stmt->error);
+        } else {
+            $stmt->bind_result($id, $name);
+            $stmt->fetch();
 
-	//find id by element name  
-	public static function findId($conn,$name) {
-		
-		// prepare and bind
-		$stmt = $conn->prepare(sprintf("SELECT id FROM tbElement WHERE name = ?"));
+            if (isset($id)) {
+                $element = new Element($conn);
+                $element->id = $id;
+                $element->name = $name;
+            } else {
+                $element = null;
+            }
+        }
+        return $element;
+    }
 
-		$stmt->bind_param("s", $name);
-		$stmt->execute();
+    //find id by element name
+    public static function findId($conn, $name)
+    {
 
-		if (!$stmt->execute()) {
-			exit($stmt->error);
-	    } else {
-   			$stmt->bind_result($id);
-    		$stmt->fetch();
-	    }
-	    
-		$stmt->close();
+        // prepare and bind
+        $stmt = $conn->prepare(sprintf("SELECT id FROM tbElement WHERE name = ?"));
 
-    	return $id === null ? 0 : $id; 
-	}
+        $stmt->bind_param("s", $name);
+        $stmt->execute();
 
-	//save a new element 
-	public function save() {
+        if (!$stmt->execute()) {
+            exit($stmt->error);
+        } else {
+            $stmt->bind_result($id);
+            $stmt->fetch();
+        }
 
-		if($this->name === null) return;
+        $stmt->close();
 
-		// assign id if the name exists 
-		$this->id = self::findId($this->_conn,$this->name);
+        return $id === null ? 0 : $id;
+    }
 
-		// insert a new record 
-     	if($this->id === 0) {
-			$stmt = $this->_conn->prepare(sprintf("INSERT INTO tbElement(name) VALUES (?)"));
-			$stmt->bind_param("s", $name);
-			$name = $this->name;
-			if (!$stmt->execute()) {
-				exit($stmt->error);
-	    	}
+    //save a new element
+    public function save()
+    {
+        if ($this->name === null) {
+            return;
+        }
 
-	    	// update id in the object 
-	    	$this->id = self::findId($this->_conn,$this->name);
+        // assign id if the name exists
+        $this->id = self::findId($this->_conn, $this->name);
 
-	    	$stmt->close();
-		}
-	}
+        // insert a new record
+        if ($this->id === 0) {
+            $stmt = $this->_conn->prepare(sprintf("INSERT INTO tbElement(name) VALUES (?)"));
+            $stmt->bind_param("s", $name);
+            $name = $this->name;
+            if (!$stmt->execute()) {
+                exit($stmt->error);
+            }
 
+            // update id in the object
+            $this->id = self::findId($this->_conn, $this->name);
+
+            $stmt->close();
+        }
+    }
 }
+
