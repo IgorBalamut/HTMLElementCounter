@@ -33,10 +33,9 @@ $(document).ready(function(){
                 $('.stat_average_time').text(data.stat_average_time);
                 $('.stat_element_domain').text(data.stat_element_domain);
                 $('.stat_total_element').text(data.stat_total_element);
-                } else {
-                    alert(data.Error);
+                } else { 
+                    openModal(data.Error);       
                 }
-
             },
             error: function(jqXHR, textStatus, errorThrown) {
                  console.log(textStatus);
@@ -44,5 +43,28 @@ $(document).ready(function(){
         })
 
 	});
+
+    // outside click to close modal
+   $(window).click(function(e) {
+        if(e.target.id == 'modal') {
+         $('#modal').css("display", "none");
+        }
+    });
+
+    // button click to close modal
+    $(".close-btn").click(function(){
+         $('#modal').css("display", "none");
+    });
+
+    // open modal window
+    function openModal(textMessage) {
+         $('#modal-text').text(textMessage);
+         $('#modal').css("display", "block");
+    }
+
+    // close modal window
+    function closeModal() {
+         $('#modal').css("display", "none");
+    }
 
 });

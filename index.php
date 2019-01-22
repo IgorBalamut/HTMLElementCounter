@@ -21,6 +21,22 @@
 </head>
 
 <body>
+<!-- modal -->
+<div id="modal" class="modal">
+	<div class="modal-content">
+		<div class="modal-header">
+			<span class="close-btn">&times;</span>
+			<h3>Warning Message</h3>
+		</div>
+		<div class="modal-body">
+			<p id="modal-text">It is a modal</p>
+		</div>
+		<div class="modal-footer">
+			
+		</div>
+	</div>
+</div>
+<!-- end of modal -->
 
 <!-- nav -->
 <nav>
@@ -64,13 +80,10 @@
 		<h1 class="counter-title">Input your data</h1>
 		<form id="input_form" method="post" action="counter.php">
 		 	URL should start from http:// or https://, maximum 255 characters
-		 	<br>
 		  	<input type="text" name="input_url" 
 			placeholder="Enter web page URL"
 		  	required pattern="^(http|https):\/\/(.*)" maxlength="255">
-		  	<br>
 		 	Element should be valid HTML5 element, maximum 10 characters
-		 	<br>
 			<input type="text" name="input_element" 
 			placeholder="Enter HTML element"
 			required pattern="^[a-zA-Z]+$" maxlength="10">
@@ -108,7 +121,15 @@
 	<div class="about-container">
 		<div class="about-title">About the HTML Element Counter
 		</div>
-		<div class="about-text"><p>Element HTML Counter allows to count HTML tags on web page.</p>
+		<div class="about-text">
+		<p>Element HTML Counter allows to count HTML tags on web page. The following points should be considered:</p>
+		<ul>
+		<li>URL should be entered with ‘http’ or ‘https’ scheme part.</li>
+		<li>Element should be standard HTML5 tags.</li>
+		<li>Only valid URLs from Curl response are saved.</li>
+		<li>Original URLs are saved for statistic.</li>
+		<li>If original URLs are similar, and differs only http/https parts, they considered as different items anyway, though can return the same HTML page.</li>
+		</ul>
 		</div>
 </section>	
 <!-- end of about section -->
@@ -118,16 +139,6 @@
 <p>2019 &copy; HTML Element Counter</p>
 </footer>
 <!-- end of footer -->
-
-<!-- modal -->
-<!-- <div id="modal" class="modal">
-	<div class="modal-content">
-		<p>It is a modal</p>
-	</div>
-</div> -->
-<!-- end of modal -->
-
-
 <!-- jQuery Core 3.3.1 -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="

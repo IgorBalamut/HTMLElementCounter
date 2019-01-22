@@ -158,9 +158,16 @@ nav ul li a:hover {
 }
 
 .counter-container {
-	min-width: 60%;
-	padding: 0 30px;
+	max-width: 100%;
+	padding: 10px 10px;
 	margin: 0,auto;
+}
+
+@media screen and (min-width: 900px) {
+	.counter-container {
+		max-width: 60%;
+		padding: 10px 30px;
+	}
 }
 
 .counter-title {
@@ -204,6 +211,7 @@ input[type=submit]:hover {
   background-color: #e6af2e;
   color: #e8e2db;
   border: 2px solid #e6af2e;
+  cursor: pointer;
 }
 
 
@@ -271,7 +279,7 @@ input[type=submit]:hover {
 }
 
 .about-container {
-	min-width: 60%;
+	min-width: 90%;
 	padding: 0 30px;
 	margin: 0,auto;
 }
@@ -289,6 +297,14 @@ input[type=submit]:hover {
 .about-text p {
 	font-weight: 500px;
 	color:#191716;
+	padding: 5px;
+}
+
+.about-text li {
+	font-weight: 500px;
+	color:#191716;
+	padding: 5px;
+	margin-left: 18px;
 }
 /** end of about section **/
 
@@ -307,5 +323,57 @@ input[type=submit]:hover {
 #modal {
     display: none;
     position: fixed;
+    z-index:1;
+    left:0;
+    right:0;
+    height:100%;
+    width:100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+	background-color: #f4f4f4; 
+	width: 90%;
+	min-height: 300px;
+	margin: 100px auto 0 auto;
+	box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),
+	0 7px 20px 0 rgba(0,0,0,0.17);
+}
+
+.modal-header {
+	font-style: italic;
+	padding: 15px;
+	text-align: center;
+	color: #191716;
+	background-color: #e6af2e;
+}
+
+.modal-header h3 {
+	margin: 0;
+}
+
+.close-btn {
+	font-style: normal;
+	color: #000;
+	float: right;
+	font-size: 30px;
+	margin-top: -8px;
+}
+
+.close-btn:hover,.close-btn:focus {
+	color: #ffff;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.modal-body {
+	padding: 15px;
+}
+
+@media screen and (min-width: 700px) {
+	.modal-content {
+		width: 50%;
+	}
 }
 /** end of modal section **/
