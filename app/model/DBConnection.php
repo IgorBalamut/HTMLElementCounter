@@ -1,6 +1,6 @@
 <?php
 
-require_once 'app/database/config.php';
+require_once 'app/config/database.php';
 
 // class for connection with config parameters
 class DBConnection

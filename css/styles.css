@@ -103,6 +103,7 @@ nav ul li a:hover {
 	background-size: cover;
 	background-repeat: no-repeat;
 	display: flex;
+	flex-direction: column; /* fix for IE11 */
 	align-items: center;
 	justify-content: center;
 }

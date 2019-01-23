@@ -7,6 +7,7 @@ require_once 'app/model/Element.php';
 require_once 'app/model/Url.php';
 require_once 'app/model/Statistic.php';
 require_once 'app/model/Request.php';
+require_once 'app/config/messages.php';
 
 class ControllerCounter
 {
@@ -88,8 +89,8 @@ class ControllerCounter
 	//request for testing counter page output 
     public function RequestTest()
     {
-        $this->input_url = 'http://www.google.com';	
-        $this->input_element = 'li';
+        $this->input_url = 'http://google.com';	
+        $this->input_element = 'a';
     }
 
     public function Response()
@@ -107,16 +108,13 @@ class ControllerCounter
     public function ValidateUrl($url)
     {
         if (filter_var($url,FILTER_VALIDATE_URL,FILTER_FLAG_HOST_REQUIRED) === False){
-            $this->resultError['Error'] = 'Not a valid URL';
+            $this->resultError['Error'] = Config::$messages['not_valid_url'];
             $this->ResponseError();
         } else {
             $pars = parse_url($url);
             if($pars['scheme'] !== 'http' and
                 $pars['scheme'] !== 'https') {
-                $this->resultError['Error'] = 
-                'Http scheme is not valid <br>' 
-                .$pars['scheme'] . '<br>'
-                .'Please input http or https <br>';
+                $this->resultError['Error'] = Config::$messages['no_http'];
                 $this->ResponseError();
             }
         } 
@@ -125,7 +123,7 @@ class ControllerCounter
 	public function ValidateElement()
 	{
 		if(!ValidateElement::do($this->input_element)) {
-			$this->resultError['Error'] = 'not a valid element';
+			$this->resultError['Error'] = '<' . $this->input_element . '> ' . Config::$messages['not_valid_element']; 
     			$this->ResponseError(); 
 		}
 	}
@@ -145,11 +143,11 @@ class ControllerCounter
 			$this->request_time = date("Y-m-d H:i:s", time());
 
 			// exec curl
-			$this->htmlDoc = curl_exec($c);
+			$this->htmlDoc = curl_exec($c); 
 
 			// exit on error
 			if (curl_error($c)) {
-			    $this->resultError['Error'] = curl_error($c);
+			    $this->resultError['Error'] = curl_error($c) . '. ' . Config::$messages['curl_error'];;
 	    		$this->ResponseError();
 			 }
 
@@ -170,7 +168,6 @@ class ControllerCounter
 	public function CurlSession()
 	{
 	  	$this->CurlInit($this->input_url);
-	  	//var_dump($this->info);
 
 	  	if($this->info['http_code'] === 301)  {
 	  		$this->input_url = $this->info['redirect_url'];
@@ -214,7 +211,6 @@ class ControllerCounter
 		foreach($this->dom->getElementsByTagName($this->input_element) as $element) {
 			$this->output_count++;
 		}	
-
 	}
 	
 	public function SaveRequestData()
@@ -296,9 +292,8 @@ class ControllerCounter
 			$this->result['output_previous'] = '';
 		} else {
 			$this->result['output_previous'] = 
-			'The same request was made less than 5 minutes ago. The previous response results are shown';
+			Config::$messages['repeated_request'];
 			$this->flag_new = true;
-
 		}
 	}
 
