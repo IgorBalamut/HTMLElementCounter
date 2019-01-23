@@ -12,8 +12,6 @@
 	<link rel="shortcut icon" type="image/x-icon" href="images/html5.png">
 	<!-- Google Fonts  -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-	<!-- <link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet"> -->
-	<!-- Fonts Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
 	<link rel="stylesheet" href="css/styles.css"> 
@@ -93,6 +91,7 @@
 	</div>
 </section>
 
+<!-- result section -->
 <section id="result">
 	<div class="result-container">
 		<div class="result-title">Request results</div>
@@ -114,7 +113,7 @@
 </div>
 </div>
 </section>
-<!-- end of counter section -->
+<!-- end of result section -->
 
 <!-- about section -->
 <section id="about">
@@ -129,7 +128,8 @@
 		<li>Only valid URLs from Curl response are saved.</li>
 		<li>Original URLs are saved for statistic.</li>
 		<li>If original URLs are similar, and differs only http/https parts, they considered as different items anyway, though can return the same HTML page.</li>
-		<li>If the same request was made less than 5 minutes ago, the previous response results are shown. 
+		<li>If the same request was made less than 5 minutes ago, the previous response results are shown.</li>
+		<li>Domain name is saved without "www" tag.</li>
 		</ul>
 		</div>
 </section>	
@@ -139,13 +139,15 @@
 <footer id="footer">
 <p>2019 &copy; HTML Element Counter</p>
 </footer>
-<!-- end of footer -->
+<!-- end of footer section-->
+
 <!-- jQuery Core 3.3.1 -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous">
  </script>
- 
+
+<!-- app js script -->
 <script src="js/scripts.js"></script>
 
 </body>

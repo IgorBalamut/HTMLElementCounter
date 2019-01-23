@@ -2,11 +2,13 @@
 
 class Statistic
 {
-
-    // Count of distinct url per domain
+    /**
+     * Count of distinct url per domain      
+     * 
+     * @return $count
+     */ 
     public static function CountUrlDomain($conn, $id=0)
     {
-
         // prepare and bind
         $stmt = $conn->prepare("SELECT count(distinct url_id) FROM tbRequest WHERE domain_id = ?");
 
@@ -29,17 +31,20 @@ class Statistic
         return $count === null ? 0 : $count;
     }
 
-    // Count of distinct url per domain
+    
+    /**
+     * Count of distinct url per domain      
+     * 
+     * @return $count
+     */ 
     public static function AverageTimeDomain($conn, $id=0)
     {
-
         // prepare and bind
         $stmt = $conn->prepare("SELECT avg(duration_mls)FROM tbRequest WHERE domain_id = ? AND request_time >date_sub(now(), interval 24 hour)");
 
         $stmt->bind_param("i", $id);
 
         $stmt->execute();
-
 
         if (!$stmt->execute()) {
             exit($stmt->error);
@@ -54,8 +59,11 @@ class Statistic
         return $avg_duration_mls === null ? 0 : round($avg_duration_mls);
     }
 
-
-    // Total count of the element for domain
+    /**
+     * Total count of the element for domain    
+     * 
+     * @return $count
+     */ 
     public static function TotalElementDomain($conn, $domain_id, $element_id)
     {
 
@@ -79,18 +87,19 @@ class Statistic
 
         return $count === null ? 0 : $count;
     }
-
-
-    // Total count of the element for All requests
+    
+    /**
+     * // Total count of the element for All requests    
+     * 
+     * @return $count
+     */ 
     public static function TotalCountElement($conn, $element_id)
     {
-
         // prepare and bind
         $stmt = $conn->prepare("SELECT sum(count_elm) FROM tbRequest WHERE element_id = ?");
 
         $stmt->bind_param("i", $element_id);
         $stmt->execute();
-
 
         if (!$stmt->execute()) {
             exit($stmt->error);

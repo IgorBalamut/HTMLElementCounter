@@ -2,7 +2,6 @@
 
 require_once 'app/config/database.php';
 
-// class for connection with config parameters
 class DBConnection
 {
     private $host;
@@ -18,21 +17,11 @@ class DBConnection
         $this->database = DB_NAME;
     }
 
-    //method to create connection with object
-    private function connect()
-    {
-        // create connection
-        $conn = new mysqli($this->host, $this->user, $this->password, $this->database);
-
-        // check connection
-        if ($conn->connect_error) {
-            die("Connection failed: ".$conn->connect_error);
-        }
-
-        return $conn;
-    }
-
-    //method to create connection just with class
+    /**
+     * Create DB connection      
+     * 
+     * @return $conn
+     */ 
     public function DBConnect()
     {
         // create connection

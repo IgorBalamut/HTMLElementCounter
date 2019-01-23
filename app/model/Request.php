@@ -1,4 +1,5 @@
 <?php 
+
 class Request
 {
     private $_conn;
@@ -20,13 +21,11 @@ class Request
         $this->_conn = $conn;
     }
 
-    public static function All($conn)
-    {
-        $sql = "SELECT id,url_id,domain_id,element_id,request_time,duration_mls,count_elm FROM tbRequest";
-        $result = $conn->query($sql);
-        return $result;
-    }
-
+    /**
+     * Get last request id in 5 min period      
+     * 
+     * @return void
+     */ 
     public static function LastRequestId($conn, $url_name, $element_name)
     {
         $sql = sprintf("
@@ -35,13 +34,14 @@ class Request
 			JOIN tbUrl url ON url_id = url.id
 			JOIN tbElement elm ON element_id = elm.id
 			WHERE url.name = ? AND elm.name = ?
-			AND request_time > DATE_SUB( NOW( ),INTERVAL 5 MINUTE)
+			AND request_time > DATE_SUB( NOW( ),INTERVAL ? MINUTE)
 			");
 
         // prepare and bind
         $stmt = $conn->prepare($sql);
+        $check_time = CHECK_TIME;
+        $stmt->bind_param("ssi", $url_name, $element_name,$check_time);
 
-        $stmt->bind_param("ss", $url_name, $element_name);
         $stmt->execute();
 
         if (!$stmt->execute()) {
@@ -56,7 +56,11 @@ class Request
         return $id === null ? 0 : $id;
     }
 
-    // find request by id, return object
+    /**
+     * Find request by id, return object      
+     * 
+     * @return $request
+     */ 
     public static function find($conn, $id)
     {
         $sql = sprintf(
@@ -102,10 +106,13 @@ class Request
         return $request;
     }
 
-    //insert a new request
+     /**
+     * Save request       
+     * 
+     * @return void
+     */ 
     public function save()
     {
-
         // prepare and bind
         $stmt = $this->_conn->prepare(sprintf("INSERT INTO tbRequest(url_id,domain_id,element_id,request_time,duration_mls,count_elm) VALUES (?,?,?,?,?,?)"));
         $stmt->bind_param("iiisii", $url_id, $domain_id, $element_id, $request_time, $duration_mls, $count_elm);

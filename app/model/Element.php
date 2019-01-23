@@ -11,15 +11,11 @@ class Element
         $this->_conn = $conn;
     }
 
-    public static function All($conn)
-    {
-        $sql = "SELECT id, name FROM tbElement";
-        $result = $conn->query($sql);
-        return $result;
-    }
-
-    // find element by name
-    // return object
+    /**
+     * Find element by name      
+     * 
+     * @return $element
+     */ 
     public static function find($conn, $name)
     {
 
@@ -45,10 +41,13 @@ class Element
         return $element;
     }
 
-    //find id by element name
+    /**
+     * Find id by element name      
+     * 
+     * @return $id
+     */ 
     public static function findId($conn, $name)
     {
-
         // prepare and bind
         $stmt = $conn->prepare(sprintf("SELECT id FROM tbElement WHERE name = ?"));
 
@@ -67,7 +66,11 @@ class Element
         return $id === null ? 0 : $id;
     }
 
-    //save a new element
+    /**
+     * Save a new element      
+     * 
+     * @return void
+     */ 
     public function save()
     {
         if ($this->name === null) {

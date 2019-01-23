@@ -1,6 +1,5 @@
 <?php 
 
-// class Domain
 class Domain
 {
     private $_conn;
@@ -12,14 +11,11 @@ class Domain
         $this->_conn = $conn;
     }
 
-    public static function All($conn)
-    {
-        $sql = "SELECT id, name FROM tbDomain";
-        $result = $conn->query($sql);
-        return $result;
-    }
-
-    // find domain by name
+    /**
+     * Find domain by name      
+     * 
+     * @return $domain
+     */ 
     public static function find($conn, $name)
     {
         // prepare and bind
@@ -44,10 +40,13 @@ class Domain
         return $domain;
     }
 
-    //find id by domain name
+    /**
+     * Find id by domain name      
+     * 
+     * @return $id
+     */ 
     public static function findId($conn, $name)
     {
-
         // prepare and bind
         $stmt = $conn->prepare(sprintf("SELECT id FROM tbDomain WHERE name = ?"));
 
@@ -66,7 +65,11 @@ class Domain
         return $id === null ? 0 : $id;
     }
 
-    //save a new domain
+    /**
+     * Save a new domain name      
+     * 
+     * @return void
+     */ 
     public function save()
     {
         if ($this->name === null) {

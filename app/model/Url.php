@@ -12,14 +12,11 @@ class Url
         $this->_conn = $conn;
     }
 
-    public static function All($conn)
-    {
-        $sql = "SELECT id, name FROM tbUrl";
-        $result = $conn->query($sql);
-        return $result;
-    }
-
-    // find url by name
+    /**
+     * Find url by name      
+     * 
+     * @return $url
+     */ 
     public static function find($conn, $name)
     {
         // prepare and bind
@@ -44,8 +41,11 @@ class Url
         return $url;
     }
 
-
-    //find id by element name
+    /**
+     * Find id by url name      
+     * 
+     * @return $id
+     */ 
     public static function findId($conn, $name)
     {
 
@@ -67,7 +67,11 @@ class Url
         return $id === null ? 0 : $id;
     }
 
-    //save a new element
+    /**
+     * Save a new url     
+     * 
+     * @return void
+     */ 
     public function save()
     {
         if ($this->name === null) {
