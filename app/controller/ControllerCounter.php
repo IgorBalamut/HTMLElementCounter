@@ -111,8 +111,8 @@ class ControllerCounter
      */ 
     public function RequestTest()
     {
-        $this->input_url = 'http://colnect.com/en';	
-        $this->input_element = 'a';
+        $this->input_url = 'http://www.google.com';	
+        $this->input_element = 'li';
     }
 
     /**
@@ -125,6 +125,7 @@ class ControllerCounter
         // close db connection 
         $this->CloseDBConnection(); 
 
+        // send response
         echo json_encode($this->result);
         exit();
     }
@@ -139,7 +140,9 @@ class ControllerCounter
         // close db connection 
         $this->CloseDBConnection();
 
+        // send response 
         echo json_encode($this->resultError);
+        
         exit();
     }
 
@@ -291,6 +294,13 @@ class ControllerCounter
         $this->dom->loadHTML($this->htmlDoc);
         // Restore error level
         libxml_use_internal_errors($internalErrors);
+
+        // check if the dom is done
+        if($this->dom === null) {
+            $this->resultError['Error'] = Config::$messages['dom_error'];
+            $this->ResponseError();             
+        }
+
     }
 
     /**
@@ -311,10 +321,19 @@ class ControllerCounter
      */
     public function CountElement()
     { 
-        $this->output_count = 0;
-        foreach($this->dom->getElementsByTagName($this->input_element) as $element) {
-            $this->output_count++;
-        }	
+        
+        if(isset($this->dom)){
+           // get elements from dom
+           $elements = $this->dom->getElementsByTagName($this->input_element);
+               // elements count
+               if(isset($elements)) {
+                    $this->output_count = $elements->length;
+                } else {
+                    $this->output_count = 0;
+                }
+        } else {
+            $this->output_count = 0;
+        }
     }
 	
     /**

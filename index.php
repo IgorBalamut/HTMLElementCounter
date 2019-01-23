@@ -124,10 +124,9 @@
 		<p>Element HTML Counter allows to count HTML tags on web page. The following points should be considered:</p>
 		<ul>
 		<li>URL should be entered with ‘http’ or ‘https’ scheme part.</li>
-		<li>Element should be standard HTML5 tags.</li>
+		<li>Element should be standard HTML5 tag.</li>
 		<li>Only valid URLs from Curl response are saved.</li>
-		<li>Original URLs are saved for statistic.</li>
-		<li>If original URLs are similar, and differs only http/https parts, they considered as different items anyway, though can return the same HTML page.</li>
+		<li>If URLs are similar, and differs only http/https parts, they considered as different items   anyway, though they can return the same HTML page.</li>
 		<li>If the same request was made less than 5 minutes ago, the previous response results are shown.</li>
 		<li>Domain name is saved without "www" tag.</li>
 		</ul>
