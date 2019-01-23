@@ -11,4 +11,3 @@ class ValidateElement
         return in_array($element,self::$html_tags);
     }
 }
-

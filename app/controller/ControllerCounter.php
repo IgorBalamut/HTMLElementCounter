@@ -24,6 +24,8 @@ class ControllerCounter
     public $info;
     public $dom;
 
+    public $conn;
+
     public $result = array('status' => 'success');
     public $resultError = array('status' => 'error');
 
@@ -42,6 +44,9 @@ class ControllerCounter
      
         // validate input element 
         $this->ValidateElement();
+
+        // open db connection 
+        $this->OpenDBConnection();
 
         // curl session,validate URL,get HTML document 
         $this->CurlSession();
@@ -74,6 +79,9 @@ class ControllerCounter
 
         // send response to AJAX index.php
         $this->Response();
+
+        // close db connection 
+        $this->CloseDBConnection(); 
 	}
 
     /**
@@ -103,8 +111,8 @@ class ControllerCounter
      */ 
     public function RequestTest()
     {
-        $this->input_url = 'http://google.com';	
-        $this->input_element = 'li';
+        $this->input_url = 'http://colnect.com/en';	
+        $this->input_element = 'a';
     }
 
     /**
@@ -114,6 +122,9 @@ class ControllerCounter
      */ 
     public function Response()
     {
+        // close db connection 
+        $this->CloseDBConnection(); 
+
         echo json_encode($this->result);
         exit();
     }
@@ -125,6 +136,9 @@ class ControllerCounter
      */ 
     public function ResponseError()
     {
+        // close db connection 
+        $this->CloseDBConnection();
+
         echo json_encode($this->resultError);
         exit();
     }
@@ -161,7 +175,35 @@ class ControllerCounter
 		    $this->ResponseError(); 
         }
     }
-
+     /**
+     * Open DB Connection      
+     * 
+     * @return void
+     */  
+    public function OpenDBConnection()
+    {
+        // create connection
+        try { 
+            $this->conn = DBConnection::DBConnect();
+        } catch (Exception $e) { 
+            if($e->getMessage() == "ConnectionError") {
+                $this->resultError['Error'] = Config::$messages['db_error'];
+                $this->ResponseError();
+            }    
+        }
+    }
+    /**
+     * Close DB Connection      
+     * 
+     * @return void
+     */  
+    public function CloseDBConnection()
+    {
+        // close connection
+        if(isset($this->conn)) {
+            $this->conn->close();
+        }
+    }
     /**
      * Initialization of Curl session. Checking wether URL is a new Url      
      * 
@@ -169,16 +211,14 @@ class ControllerCounter
      */  
     public function CurlInit($url)
     {
-        // create connection
-        $conn = DBConnection::DBConnect();
-
-        if(Request::LastRequestId($conn,$url,$this->input_element) === 0){ 
+        // check previuos request time
+        if(Request::LastRequestId($this->conn,$url,$this->input_element) === 0){ 
             // init curl
             $c = curl_init($url);
             curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
 
             //current time 
-             $this->request_time = date("Y-m-d H:i:s", time());
+            $this->request_time = date("Y-m-d H:i:s", time());
 
             // exec curl
             $this->htmlDoc = curl_exec($c); 
@@ -191,16 +231,13 @@ class ControllerCounter
 
             // get info 
             $this->info = curl_getinfo($c);
-
+            
             // close session
            curl_close($c);
 
         } else {
             $this->flag_new = false;
         }
-
-        // close connection
-        $conn->close();
     }
 
     /**
@@ -221,15 +258,22 @@ class ControllerCounter
             $this->CurlInit($this->input_url);
         }
 
-        // if new url add proceed with save
+        // if a new url 
         if($this->flag_new) {
             if($this->info['http_code'] === 200) {
+                $this->input_url = $this->info['url'];
                 $this->duration_mls = round($this->info['total_time'] * 1000);
             } else {
-                $this->resultError['Error'] = 'not correct url, '.'http_code: ' . $this->info['http_code'];
+                $this->resultError['Error'] = Config::$messages['http_error'].', http response code: ' . $this->info['http_code'];
                 $this->ResponseError();
             }
         }
+        
+        // re-check with url updated from curl 
+        if(Request::LastRequestId($this->conn,$this->input_url,$this->input_element) !== 0){ 
+            $this->flag_new = false;  
+        }
+       
     }
 
     /**
@@ -280,8 +324,8 @@ class ControllerCounter
      */
     public function SaveRequestData()
     { 
-        // create connection
-        $conn = DBConnection::DBConnect();
+        // connection
+        $conn = $this->conn;
 
         // store domain, if it is a new domain
         $domain = new Domain($conn);
@@ -317,8 +361,6 @@ class ControllerCounter
             $this->resultError['Error'] = 'System issue';
             $this->ResponseError();	
         }
-        // close connection
-        $conn->close();
     }
 
     /**
@@ -328,8 +370,8 @@ class ControllerCounter
      */
     public function GetRequestData()
     {
-        // create connection
-        $conn = DBConnection::DBConnect();
+        // connection
+        $conn = $this->conn;
 
         // get id of previuos request
         $id = Request::LastRequestId($conn,$this->input_url,$this->input_element);
@@ -340,9 +382,6 @@ class ControllerCounter
         $this->output_count = $request->count_elm;
         $this->request_time = $request->request_time;
         $this->duration_mls = $request->duration_mls;
-
-        // close connection
-        $conn->close();
     }
 
     /**
@@ -376,8 +415,8 @@ class ControllerCounter
      */
     public function GetStatisticData()
     { 
-        // create connection
-        $conn = DBConnection::DBConnect();
+        // connection
+        $conn = $this->conn;
 
         // find domain and get object  
         $domain = Domain::find($conn,$this->domain_name);
@@ -412,8 +451,5 @@ class ControllerCounter
         } else {
             $this->result['stat_total_element'] = '';
         }
-
-        // close connection
-        $conn->close();
     }
 }

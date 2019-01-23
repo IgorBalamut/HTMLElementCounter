@@ -14,9 +14,6 @@ class Statistic
 
         $stmt->bind_param("i", $id);
 
-        $stmt->execute();
-
-
         if (!$stmt->execute()) {
             exit($stmt->error);
         } else {
@@ -43,8 +40,6 @@ class Statistic
         $stmt = $conn->prepare("SELECT avg(duration_mls)FROM tbRequest WHERE domain_id = ? AND request_time >date_sub(now(), interval 24 hour)");
 
         $stmt->bind_param("i", $id);
-
-        $stmt->execute();
 
         if (!$stmt->execute()) {
             exit($stmt->error);
@@ -73,8 +68,6 @@ class Statistic
         // prepare and bind
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ii", $domain_id, $element_id);
-        $stmt->execute();
-
 
         if (!$stmt->execute()) {
             exit($stmt->error);
@@ -99,8 +92,7 @@ class Statistic
         $stmt = $conn->prepare("SELECT sum(count_elm) FROM tbRequest WHERE element_id = ?");
 
         $stmt->bind_param("i", $element_id);
-        $stmt->execute();
-
+        
         if (!$stmt->execute()) {
             exit($stmt->error);
         } else {

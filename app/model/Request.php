@@ -42,8 +42,6 @@ class Request
         $check_time = CHECK_TIME;
         $stmt->bind_param("ssi", $url_name, $element_name,$check_time);
 
-        $stmt->execute();
-
         if (!$stmt->execute()) {
             exit($stmt->error);
         } else {
@@ -78,7 +76,6 @@ class Request
         // prepare and bind
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id);
-        $stmt->execute();
 
         if (!$stmt->execute()) {
             exit($stmt->error);

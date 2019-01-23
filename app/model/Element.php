@@ -22,7 +22,6 @@ class Element
         // prepare and bind
         $stmt = $conn->prepare(sprintf("SELECT id,name FROM tbElement WHERE name = ?"));
         $stmt->bind_param("s", $name);
-        $stmt->execute();
 
         if (!$stmt->execute()) {
             exit($stmt->error);
@@ -52,7 +51,6 @@ class Element
         $stmt = $conn->prepare(sprintf("SELECT id FROM tbElement WHERE name = ?"));
 
         $stmt->bind_param("s", $name);
-        $stmt->execute();
 
         if (!$stmt->execute()) {
             exit($stmt->error);

@@ -21,7 +21,6 @@ class Domain
         // prepare and bind
         $stmt = $conn->prepare(sprintf("SELECT id,name FROM tbDomain WHERE name = ?"));
         $stmt->bind_param("s", $name);
-        $stmt->execute();
 
         if (!$stmt->execute()) {
             exit($stmt->error);
@@ -49,10 +48,8 @@ class Domain
     {
         // prepare and bind
         $stmt = $conn->prepare(sprintf("SELECT id FROM tbDomain WHERE name = ?"));
-
         $stmt->bind_param("s", $name);
-        $stmt->execute();
-
+    
         if (!$stmt->execute()) {
             exit($stmt->error);
         } else {

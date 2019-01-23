@@ -22,7 +22,6 @@ class Url
         // prepare and bind
         $stmt = $conn->prepare(sprintf("SELECT id,name FROM tbUrl WHERE name = ?"));
         $stmt->bind_param("s", $name);
-        $stmt->execute();
 
         if (!$stmt->execute()) {
             exit($stmt->error);
@@ -53,8 +52,7 @@ class Url
         $stmt = $conn->prepare(sprintf("SELECT id FROM tbUrl WHERE name = ?"));
 
         $stmt->bind_param("s", $name);
-        $stmt->execute();
-
+        
         if (!$stmt->execute()) {
             exit($stmt->error);
         } else {

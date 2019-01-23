@@ -24,13 +24,14 @@ class DBConnection
      */ 
     public function DBConnect()
     {
+        mysqli_report(MYSQLI_REPORT_STRICT); 
         // create connection
-        $conn = new mysqli(HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
-        // check connection
-        if ($conn->connect_error) {
-            die("Connection failed: ".$conn->connect_error);
-        }
+        try { 
+            $conn = new mysqli(HOST, DB_USER, DB_PASSWORD, DB_NAME); 
+        } catch (mysqli_sql_exception $e) { 
+            error_log($e); 
+            throw new Exception('ConnectionError');
+        }          
 
         return $conn;
     }

@@ -21,7 +21,6 @@ $(document).ready(function(){
             dataType: "json",
             contentType: "application/x-www-form-urlencoded",
             success: function(data, textStatus, jqXHR) {
-                console.log(data);
             if(data.status == 'success') {    
                 $('.output_url').text(data.output_url);
                 $('.output_element').text(data.output_element);
@@ -37,10 +36,10 @@ $(document).ready(function(){
                 if(!(data.output_previous == '')){
                     openModal(data.output_previous);
                 }
-                
-                } else { 
+
+            } else { 
                     openModal(data.Error);       
-                }
+            }
             },
             error: function(jqXHR, textStatus, errorThrown) {
                  console.log(textStatus);

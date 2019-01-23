@@ -52,4 +52,3 @@ ADD FOREIGN KEY (domain_id) references tbDomain(id);
 
 alter table tbRequest
 ADD FOREIGN KEY (element_id) references tbElement(id);
-
