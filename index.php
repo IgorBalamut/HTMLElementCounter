@@ -84,7 +84,7 @@
 		 	Element should be valid HTML5 element, maximum 10 characters
 			<input type="text" name="input_element" 
 			placeholder="Enter HTML element"
-			required pattern="^[a-zA-Z]+$" maxlength="10">
+			required pattern="^[a-zA-Z0-9]+$" maxlength="10">
 		  	<input type="submit" value="Submit Request">
 		  	
 	</form> 
