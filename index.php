@@ -94,7 +94,7 @@
 <!-- result section -->
 <section id="result">
 	<div class="result-container">
-		<div class="result-title">Request results</div>
+		<h1 class="result-title">Request results</h1>
 
 		<div class="result-text">
 		<p>URL  <span class="output_url correct"></span> fetched on <span class="output_time correct"></span>, took <span class="output_period"></span> msec.</p>
@@ -117,8 +117,8 @@
 <!-- about section -->
 <section id="about">
 	<div class="about-container">
-		<div class="about-title">About the HTML Element Counter
-		</div>
+		<h1 class="about-title">About the HTML Element Counter
+		</h1>
 		<div class="about-text">
 		<p>Element HTML Counter allows to count HTML tags on web page. The following points should be considered:</p>
 		<ul>
