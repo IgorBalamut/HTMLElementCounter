@@ -111,8 +111,8 @@ class ControllerCounter
      */ 
     public function RequestTest()
     {
-        $this->input_url = 'http://localhost/project/public/test/test.html';	
-        $this->input_element = 'a';
+        $this->input_url = 'http://colnect.com/en';
+        $this->input_element = 'img';
     }
 
     /**
@@ -221,7 +221,9 @@ class ControllerCounter
         if(Request::LastRequestId($this->conn,$url,$this->input_element) === 0){ 
             // init curl
             $c = curl_init($url);
-            curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($c, CURLOPT_RETURNTRANSFER,true);
+            curl_setopt($c, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13");
+            curl_setopt($c, CURLOPT_FOLLOWLOCATION, true);
 
             //current time 
             $this->request_time = date("Y-m-d H:i:s", time());

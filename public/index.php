@@ -81,10 +81,10 @@
 		  	<input type="text" name="input_url" 
 			placeholder="Enter web page URL"
 		  	required pattern="^(http|https):\/\/(.*)" maxlength="255">
-		 	Element should be valid HTML5 element, maximum 10 characters
+		 	Element should be HTML element, maximum 25 characters
 			<input type="text" name="input_element" 
 			placeholder="Enter HTML element"
-			required pattern="^[a-zA-Z0-9]+$" maxlength="10">
+			required pattern="^[a-zA-Z0-9_.-]+$" maxlength="50">
 		  	<input type="submit" value="Submit Request">
 		  	
 	</form> 
@@ -122,8 +122,8 @@
 		<div class="about-text">
 		<p>Element HTML Counter allows to count HTML tags on web page. The following points should be considered:</p>
 		<ul>
-		<li>URL should be entered with ‘http’ or ‘https’ scheme part.</li>
-		<li>Element should be standard HTML5 tag.</li>
+		<li>URL should be entered with ‘http’ or ‘https’ scheme part, maximum length is 255 characters.</li>
+		<li>HTML Element can include alphanumeric characters, underscore (_), dash (-), point (.) maximum length is 25 characters.</li>
 		<li>Only valid URLs from Curl response are saved.</li>
 		<li>If URLs are similar, and differs only http/https parts, they considered as different items   anyway, though they can return the same HTML page.</li>
 		<li>If the same request was made less than 5 minutes ago, the previous response results are shown.</li>
