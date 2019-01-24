@@ -17,6 +17,6 @@ class Config
 
     // array of parameters 
     public static $params = [
-        'standard_html5' => true,
+        'standard_html5' => false,
     ];
 }
