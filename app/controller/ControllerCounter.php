@@ -1,13 +1,13 @@
 <?php 
 
-require_once 'app/controller/ValidateElement.php';
-require_once 'app/model/DBConnection.php';
-require_once 'app/model/Domain.php';
-require_once 'app/model/Element.php';
-require_once 'app/model/Url.php';
-require_once 'app/model/Statistic.php';
-require_once 'app/model/Request.php';
-require_once 'app/config/Config.php';
+require_once '../app/controller/ValidateElement.php';
+require_once '../app/model/DBConnection.php';
+require_once '../app/model/Domain.php';
+require_once '../app/model/Element.php';
+require_once '../app/model/Url.php';
+require_once '../app/model/Statistic.php';
+require_once '../app/model/Request.php';
+require_once '../app/config/Config.php';
 
 class ControllerCounter
 {
@@ -111,7 +111,7 @@ class ControllerCounter
      */ 
     public function RequestTest()
     {
-        $this->input_url = 'http://localhost/project/test/test.html';	
+        $this->input_url = 'http://localhost/project/public/test/test.html';	
         $this->input_element = 'a';
     }
 

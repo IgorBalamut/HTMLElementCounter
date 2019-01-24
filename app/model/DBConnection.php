@@ -1,6 +1,6 @@
 <?php
 
-require_once 'app/config/database.php';
+require_once '../app/config/database.php';
 
 class DBConnection
 {
