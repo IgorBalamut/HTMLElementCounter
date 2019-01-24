@@ -66,7 +66,7 @@
 		<div class="banner-text">Element Counter</div>
 		<div class="banner-underline"></div>
 		<div class="banner-btn">
-			<a href="#counter" type="button">Start now</a>
+			<a href="#counter">Start now</a>
 		</div>
 	</div>
 </header>
@@ -96,22 +96,21 @@
 	<div class="result-container">
 		<div class="result-title">Request results</div>
 
-	<div class="result-text">
-	<p>URL  <span class="output_url correct"></span> fetched on <span class="output_time correct"></span>, took <span class="output_period"></span> msec.</p>
-    <p>Element <span class="output_element"></span> appeared <span class="output_count"></span> times in the page.</p>
-	 </div>	
+		<div class="result-text">
+		<p>URL  <span class="output_url correct"></span> fetched on <span class="output_time correct"></span>, took <span class="output_period"></span> msec.</p>
+	    <p>Element <span class="output_element"></span> appeared <span class="output_count"></span> times in the page.</p>
+		 </div>	
 
-    <div class="result-title">General Statistics</div>
+	    <div class="result-title">General Statistics</div>
 
-    <div class="result-text">
-    <p><span class="stat_count_url"></span> different URLs from <span class="output_domain"></span> have been fetched.</p>
-    <p>Average fetch time from <span class="output_domain"></span> during the last 24 hours hours is <span class="stat_average_time"></span> msec.</p>
-    <p>There was a total of <span class="stat_element_domain"></span> <span class="output_element"></span> elements from <span class="output_domain"></span>.</p>
-    <p>Total of <span class="stat_total_element"></span> <span class="output_element"></span> elements counted in all requests ever made.</p>
-    </div>
+	    <div class="result-text">
+	    <p><span class="stat_count_url"></span> different URLs from <span class="output_domain"></span> have been fetched.</p>
+	    <p>Average fetch time from <span class="output_domain"></span> during the last 24 hours hours is <span class="stat_average_time"></span> msec.</p>
+	    <p>There was a total of <span class="stat_element_domain"></span> <span class="output_element"></span> elements from <span class="output_domain"></span>.</p>
+	    <p>Total of <span class="stat_total_element"></span> <span class="output_element"></span> elements counted in all requests ever made.</p>
+	    </div>
 
-</div>
-</div>
+	</div>
 </section>
 <!-- end of result section -->
 
@@ -131,6 +130,7 @@
 		<li>Domain name is saved without "www" tag.</li>
 		</ul>
 		</div>
+	</div>	
 </section>	
 <!-- end of about section -->
 

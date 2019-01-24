@@ -111,8 +111,8 @@ class ControllerCounter
      */ 
     public function RequestTest()
     {
-        $this->input_url = 'http://www.google.com';	
-        $this->input_element = 'li';
+        $this->input_url = 'http://localhost/project/test/test.html';	
+        $this->input_element = 'a';
     }
 
     /**
@@ -173,11 +173,14 @@ class ControllerCounter
      */ 
     public function ValidateElement()
     {
-        if(!ValidateElement::do($this->input_element)) {
-	        $this->resultError['Error'] = '<' . $this->input_element . '> ' . Config::$messages['not_valid_element']; 
-		    $this->ResponseError(); 
+        if(Config::$params['standard_html5'] === true) {
+            if(!ValidateElement::do($this->input_element)) {
+	            $this->resultError['Error'] = '<' . $this->input_element . '> ' . Config::$messages['not_valid_element']; 
+		        $this->ResponseError(); 
+            }
         }
     }
+
      /**
      * Open DB Connection      
      * 

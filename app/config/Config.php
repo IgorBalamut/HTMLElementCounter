@@ -14,4 +14,9 @@ class Config
          'dom_error' => 'Issue with HTML page. Please enter another URL or try later',
          'db_error' => 'The service is unavailble. Please contact Site Administrator.',
 	];
+
+    // array of parameters 
+    public static $params = [
+        'standard_html5' => true,
+    ];
 }
